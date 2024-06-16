@@ -4,9 +4,6 @@ import 'dotenv/config';
 import { db, connectToDB } from "./db.js";
 app.use(express.json());
 
-
-
-
 app.put('/api/articles/:name/upvote', async(req, res) => {
   const { name } = req.params;
   
@@ -25,7 +22,6 @@ app.put('/api/articles/:name/upvote', async(req, res) => {
     }
 })
 
-
 app.post("/api/articles/:name/comments", async(req, res) => {
     const { name } = req.params;
     const { postedBy, text } = req.body;
@@ -43,8 +39,6 @@ app.post("/api/articles/:name/comments", async(req, res) => {
     res.send("The Article doesn't exist");
   }
 });
-
-
 
 connectToDB(() => {
   console.log("connected to db successfully");
