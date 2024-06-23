@@ -4,6 +4,22 @@ import 'dotenv/config';
 import { db, connectToDB } from "./db.js";
 app.use(express.json());
 
+
+
+
+app.get("/api/articles/:name", async (req, res) => {
+  const { name } = req.params;
+
+  const article = await db.collection("atricles").findOne({ name });
+
+  if (article) {
+    res.json(article);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
+
 app.put('/api/articles/:name/upvote', async(req, res) => {
   const { name } = req.params;
   
@@ -16,7 +32,7 @@ app.put('/api/articles/:name/upvote', async(req, res) => {
   
     if (article) {
         article.upvotes += 1;
-        res.send(`The ${name} article now has ${article.upvotes}!!`);
+      res.json(article);
     } else {
         res.send("The Article doesn\'t exist")
     }
@@ -34,7 +50,7 @@ app.post("/api/articles/:name/comments", async(req, res) => {
 
 
   if (article) {
-    res.send(article.comments);
+    res.json(article);
   } else {
     res.send("The Article doesn't exist");
   }
